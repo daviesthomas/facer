@@ -151,7 +151,7 @@ def rot90(v):
     return np.array([-v[1], v[0]])
 
 
-def get_quad(lm: torch.Tensor, scale: float = 1.0):
+def get_quad(lm: torch.Tensor, scale: float = 1.3):
     """ Scale > 1. zooms out, < 1. zooms in """
     # N,2
     lm = lm.detach().cpu().numpy()
