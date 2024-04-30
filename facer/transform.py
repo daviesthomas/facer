@@ -151,7 +151,8 @@ def rot90(v):
     return np.array([-v[1], v[0]])
 
 
-def get_quad(lm: torch.Tensor):
+def get_quad(lm: torch.Tensor, scale: float = 1.0):
+    """ Scale > 1. zooms out, < 1. zooms in """
     # N,2
     lm = lm.detach().cpu().numpy()
     # Choose oriented crop rectangle.
@@ -162,6 +163,7 @@ def get_quad(lm: torch.Tensor):
     x = eye_to_eye - rot90(eye_to_mouth)
     x /= np.hypot(*x)
     x *= max(np.hypot(*eye_to_eye) * 2.0, np.hypot(*eye_to_mouth) * 1.8)
+    x *= scale
     y = rot90(x)
     c = eye_avg + eye_to_mouth * 0.1
     quad = np.stack([c - x - y, c - x + y, c + x + y, c + x - y])
